@@ -54,7 +54,7 @@ const PostDetail = () => {
             <h1 className="text-3xl font-extrabold leading-tight text-gray-900 lg:text-4xl dark:text-white">
               {post.title}
             </h1>
-            <p class="text-sm md:text-base font-normal text-gray-600">
+            <p className="text-sm md:text-base font-normal text-gray-600">
               Published {formattedDate}
             </p>
           </header>

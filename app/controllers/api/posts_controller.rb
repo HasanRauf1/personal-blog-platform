@@ -1,4 +1,8 @@
 class Api::PostsController < ApplicationController
+  before_action :set_post, only: [:show, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :correct_user, only: [:edit, :update, :destroy]  
+  
   # GET /posts
   def index
     @posts = Post.all
@@ -13,7 +17,7 @@ class Api::PostsController < ApplicationController
 
   # POST /posts
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.build(post_params)
     if @post.save
       render json: @post, status: :created
     else
@@ -42,6 +46,15 @@ class Api::PostsController < ApplicationController
   end
 
   private
+
+  def set_post
+    @post = Post.find(params[:id])
+  end
+
+  def correct_user
+    @post = current_user.posts.find_by(id: params[:id])
+    render json: { error: "Not Authorized", user: current_user }, status: :forbidden unless @post
+  end
 
   def post_params
     params.require(:post).permit(:title, :body)
