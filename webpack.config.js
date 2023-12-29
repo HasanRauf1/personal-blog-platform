@@ -2,7 +2,7 @@ const path    = require("path")
 const webpack = require("webpack")
 
 module.exports = {
-  mode: "production",
+  mode: "development",
   devtool: "source-map",
   entry: {
     application: "./app/javascript/application.js"
@@ -24,6 +24,9 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
+          options: {
+            sourceMaps: true,
+          },
         },
       },
       // ... other rules ...
