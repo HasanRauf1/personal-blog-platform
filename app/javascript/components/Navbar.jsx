@@ -4,7 +4,7 @@ import { AuthContext } from '../contexts/AuthContext';
 import { logout } from '../services/authService';
 
 const Navbar = () => {
-  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  const { authState, checkAuthStatus } = useContext(AuthContext);
 
   // Toggle menu function for small screens
   const toggleMenu = () => {
@@ -14,8 +14,9 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     const result = await logout();
+    toggleMenu()
     if (result) {
-      setCurrentUser(null); // Update the context to reflect that the user is logged out
+      await checkAuthStatus()
     } else {
       console.error('Logout failed');
     }
@@ -39,21 +40,16 @@ const Navbar = () => {
             <li onClick={toggleMenu} className="mr-3">
               <Link className="inline-block py-2 px-4 text-gray-900 font-bold no-underline" to="/">Home</Link>
             </li>
-            <li className="mr-3">
-              <button onClick={handleLogout} className="inline-block py-2 px-4 text-gray-900 font-bold no-underline">
-                Logout
-              </button>
-            </li>
             <li onClick={toggleMenu} className="mr-3">
               <Link className="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4" to="/post/new">Create a new Blog</Link>
             </li>
             <li onClick={toggleMenu} className="mr-3">
               <Link className="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4" to="/link2">Link2</Link>
             </li>
-            {currentUser ? (
+            {authState.signedIn ? (
               <>
                 <li className="mr-3">
-                  <span className="inline-block py-2 px-4 text-gray-900 font-bold">{currentUser.email}</span>
+                  <span className="inline-block py-2 px-4 text-gray-900 font-bold">{authState.user.email}</span>
                 </li>
                 <li className="mr-3">
                   <button onClick={handleLogout} className="inline-block py-2 px-4 text-gray-900 font-bold no-underline">
@@ -63,7 +59,7 @@ const Navbar = () => {
               </>
             ) : (
               <li className="mr-3">
-                <Link to="/login" className="inline-block py-2 px-4 text-gray-900 font-bold no-underline">Login</Link>
+                <Link onClick={() => toggleMenu()} to="/login" className="inline-block py-2 px-4 text-gray-900 font-bold no-underline">Login</Link>
               </li>
             )}
           </ul>
