@@ -40,14 +40,11 @@ const Navbar = () => {
             <li onClick={toggleMenu} className="mr-3">
               <Link className="inline-block py-2 px-4 text-gray-900 font-bold no-underline" to="/">Home</Link>
             </li>
-            <li onClick={toggleMenu} className="mr-3">
-              <Link className="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4" to="/post/new">Create a new Blog</Link>
-            </li>
-            <li onClick={toggleMenu} className="mr-3">
-              <Link className="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4" to="/link2">Link2</Link>
-            </li>
             {authState.signedIn ? (
               <>
+                <li onClick={toggleMenu} className="mr-3">
+                  <Link className="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4" to="/post/new">Create a new Blog</Link>
+                </li>
                 <li className="mr-3">
                   <span className="inline-block py-2 px-4 text-gray-900 font-bold">{authState.user.email}</span>
                 </li>
@@ -58,9 +55,14 @@ const Navbar = () => {
                 </li>
               </>
             ) : (
-              <li className="mr-3">
-                <Link onClick={() => toggleMenu()} to="/login" className="inline-block py-2 px-4 text-gray-900 font-bold no-underline">Login</Link>
-              </li>
+              <>
+                <li onClick={toggleMenu} className="mr-3">
+                  <Link onClick={() => toggleMenu()} to="/signup" className="inline-block py-2 px-4 text-gray-900 font-bold no-underline">Sign Up</Link>
+                </li>
+                <li className="mr-3">
+                  <Link onClick={() => toggleMenu()} to="/login" className="inline-block py-2 px-4 text-gray-900 font-bold no-underline">Login</Link>
+                </li>
+              </>
             )}
           </ul>
         </div>
