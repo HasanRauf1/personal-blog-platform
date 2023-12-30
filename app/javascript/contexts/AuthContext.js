@@ -1,17 +1,27 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [authState, setAuthState] = useState({
+    signedIn: false,
+    user: null
+  });
 
-  // Function to update the current user
-  const setUser = (user) => {
-    setCurrentUser(user);
-  };
+  const checkAuthStatus = async () => {
+    fetch('/auth/check')
+    .then(response => response.json())
+    .then(data => setAuthState({ signedIn: data.signed_in, user: data.user }))
+    .catch(error => console.error('Error:', error));
+  }   
+
+  useEffect(() => {
+    // Fetch the authentication state from Rails on component mount
+    checkAuthStatus()
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser, setCurrentUser }}>
+    <AuthContext.Provider value={{ authState, setAuthState, checkAuthStatus }}>
       {children}
     </AuthContext.Provider>
   );

@@ -7,14 +7,13 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  const { checkAuthStatus } = useContext(AuthContext);
 
-  const handleSubmit = async (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
     const user = await login(email, password);
     if (user) {
-      setCurrentUser(user);
-      console.log(currentUser)
+      await checkAuthStatus();
       navigate('/');
     } else {
       // Handle login error
@@ -23,7 +22,7 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleLogin}>
       <input
         type="email"
         placeholder="Email"
