@@ -27,7 +27,7 @@ const Navbar = () => {
       <div className="w-full md:max-w-4xl mx-auto flex flex-wrap items-center justify-between mt-0 py-3">
         <div className="pl-4">
           <Link to="/" className="text-gray-900 text-base no-underline hover:no-underline font-extrabold text-xl">
-            Minimal Blog
+            Blog Posts
           </Link>
         </div>
         <div className="block lg:hidden pr-4">
@@ -57,10 +57,10 @@ const Navbar = () => {
             ) : (
               <>
                 <li onClick={toggleMenu} className="mr-3">
-                  <Link onClick={() => toggleMenu()} to="/signup" className="inline-block py-2 px-4 text-gray-900 font-bold no-underline">Sign Up</Link>
+                  <Link to="/signup" className="inline-block py-2 px-4 text-gray-900 font-bold no-underline">Sign Up</Link>
                 </li>
-                <li className="mr-3">
-                  <Link onClick={() => toggleMenu()} to="/login" className="inline-block py-2 px-4 text-gray-900 font-bold no-underline">Login</Link>
+                <li onClick={toggleMenu} className="mr-3">
+                  <Link to="/login" className="inline-block py-2 px-4 text-gray-900 font-bold no-underline">Login</Link>
                 </li>
               </>
             )}
