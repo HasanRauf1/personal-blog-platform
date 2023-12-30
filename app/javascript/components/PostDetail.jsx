@@ -31,8 +31,6 @@ const PostDetail = () => {
     })
       .then(response => {
         if (response.ok) {
-          // Handle successful deletion
-          // Perhaps navigate back to the list of posts
           navigate('/');
         } else {
           // Handle errors

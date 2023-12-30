@@ -1,7 +1,7 @@
 class Api::PostsController < ApplicationController
-  before_action :set_post, only: [:show, :update, :destroy]
+  before_action :set_post, only: [:show]
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :correct_user, only: [:edit, :update, :destroy]  
+  before_action :correct_user, only: [:update, :destroy]  
   
   # GET /posts
   def index
@@ -11,7 +11,7 @@ class Api::PostsController < ApplicationController
 
   # GET /posts/:id
   def show
-    @post = Post.find(params[:id])
+    # @post = Post.find(params[:id])
     render json: @post
   end
 
@@ -27,7 +27,7 @@ class Api::PostsController < ApplicationController
 
   # PATCH/PUT /posts/:id
   def update
-    @post = Post.find(params[:id])
+    # @post = Post.find(params[:id])
     if @post.update(post_params)
       render json: @post
     else
@@ -37,7 +37,7 @@ class Api::PostsController < ApplicationController
 
   # DELETE /posts/:id
   def destroy
-    @post = Post.find(params[:id])
+    # @post = Post.find(params[:id])
     if @post.destroy
       render json: { message: 'Post successfully deleted.' }, status: :ok
     else
