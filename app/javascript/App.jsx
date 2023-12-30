@@ -19,8 +19,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<PostsList />} />
           <Route path="/post/new" element={<NewPostForm />} />
-          <Route path="/post/:id/edit" element={<EditPostForm />} />
-          <Route path="/post/:id" element={<PostDetail />} />
+          <Route path="/post/:postId/edit" element={<EditPostForm />} />
+          <Route path="/post/:postId" element={<PostDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>

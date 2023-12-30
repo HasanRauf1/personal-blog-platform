@@ -2,18 +2,26 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
+import CommentForm from './CommentForm';
 
 const PostDetail = () => {
   const [post, setPost] = useState(null);
-  const { id } = useParams();
+  const [comments, setComments] = useState([]);
+  const { postId } = useParams();
   const navigate = useNavigate();
   const { authState } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch(`/api/posts/${id}`)
+    // Fetch the post details
+    fetch(`/api/posts/${postId}`)
       .then(response => response.json())
       .then(data => setPost(data));
-  }, [id]);
+
+    // Fetch the comments
+    fetch(`/api/posts/${postId}/comments`)
+      .then(response => response.json())
+      .then(data => setComments(data));
+  }, [postId]);
 
   if (!post) return <div>Loading...</div>;
 
@@ -21,10 +29,11 @@ const PostDetail = () => {
   const formattedDate = `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`;
 
   const deletePost = () => {
-    fetch(`/api/posts/${id}`, {
+    fetch(`/api/posts/${postId}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.querySelector("meta[name='csrf-token']").getAttribute("content")
       }
     })
       .then(response => {
@@ -37,6 +46,24 @@ const PostDetail = () => {
       .catch(error => {
         console.error('Network error:', error);
       });
+  };
+
+  const Comment = ({ comment }) => (
+    <div className="bg-white shadow-lg rounded-lg p-4 mb-4">
+      <div className="flex items-start">
+        <div className="flex-shrink-0">
+          {/* If you have user avatars, you can include them here */}
+        </div>
+        <div className="ml-4">
+          <p className="text-gray-600 text-sm">{comment.content}</p>
+          <p className="text-gray-500 text-xs">Comment by: {comment.user?.email}</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  const addNewComment = (newComment) => {
+    setComments(prevComments => [...prevComments, newComment]);
   };
 
   return (
@@ -68,7 +95,13 @@ const PostDetail = () => {
               </button>
             </div>
           }
-
+          {comments.length != 0 && <h2>Comments</h2>}
+          {comments?.map(comment => (
+            <Comment key={comment.id} comment={comment} />
+          ))}
+          {authState.signedIn &&
+            <CommentForm postId={postId} onNewComment={addNewComment} />
+          }
         </article>
       </div>
     </main>
