@@ -21,29 +21,38 @@ To get a local copy up and running, follow these simple steps:
 
 ### Installation
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/HasanRauf1/personal-blog-platform.git
-   ```
+    ```bash
+    git clone https://github.com/HasanRauf1/personal-blog-platform.git
+    ```
 2. Navigate into the application directory: 
-   ```bash
-   cd personal-blog-platform
-   ```
+    ```bash
+    cd personal-blog-platform
+    ```
 
 3. Install the required gems:
 
-bundle install
+    ```bash
+    bundle install
+    ```
 
 4. Install JavaScript dependencies:
 
-yarn install
+    ```bash
+    yarn install
+    ```
 
 5. Create and migrate the database:
-rails db:create
-rails db:migrate
+
+    ```bash
+    rails db:create
+    rails db:migrate
+    ```
 
 ## Running the Application
 Start the application servers using the bin/dev script:
 
-bin/dev
+  ```bash
+  bin/dev
+  ```
 
 This command will start both the Rails server and the Webpack dev server. Visit http://localhost:3000 in your browser to access the application.
