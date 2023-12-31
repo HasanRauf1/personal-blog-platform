@@ -11,6 +11,10 @@ class Api::CommentsController < ApplicationController
     @comment.user = current_user
 
     if @comment.save
+      TwilioClient.new.send_sms(
+        to: '+12147999280', 
+        body: 'A new comment was posted!'
+      )
       render json: @comment, include: :user, status: :created, location: @api_post
     else
       render json: @comment.errors, status: :unprocessable_entity
