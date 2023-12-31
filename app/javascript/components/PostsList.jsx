@@ -17,7 +17,7 @@ const PostsList = () => {
         {posts.map((post) => (
           <div key={post.id} className="group block p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
             <Link to={`/post/${post.id}`}>
-              <h3 className="text-lg font-semibold text-indigo-800 group-hover:text-indigo-600">{post.title}</h3>
+              <h3 className="text-lg font-semibold text-indigo-900 group-hover:text-indigo-600">{post.title}</h3>
             </Link>
             <p className="mt-2 text-sm text-gray-600 line-clamp-3">{post.body}</p>
           </div>

@@ -16,7 +16,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     const result = await logout();
     handleMenuItemClick();
-    
+
     if (result) {
       await checkAuthStatus()
       navigate('/');
@@ -36,30 +36,30 @@ const Navbar = () => {
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between items-center py-3">
           {/* Logo and branding */}
-          <Link to="/" className="text-gray-700 hover:text-gray-900 font-bold text-xl">
+          <Link to="/" className="text-indigo-900 hover:text-indigo-600 font-bold text-xl">
             Blog Posts
           </Link>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <button onClick={toggleMenu} className="text-gray-700 hover:text-gray-900 focus:outline-none">
+            <button onClick={toggleMenu} className="text-indigo-900 hover:text-indigo-600 focus:outline-none">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
           </div>
 
           {/* Primary Nav Items for Large Screens */}
-          <div className="hidden md:flex items-center space-x-1" id="nav-content">
+          <div className="hidden md:flex items-center space-x-1">
             <Link className="py-2 px-3 text-gray-700 hover:text-gray-900" to="/" onClick={handleMenuItemClick}>Home</Link>
             {authState.signedIn ? (
               <>
-                <Link className="py-2 px-3 text-gray-700 hover:text-gray-900" to="/post/new" onClick={handleMenuItemClick}>Create a new Blog</Link>
-                <span className="py-2 px-3 text-gray-700">{authState.user.email}</span>
-                <button onClick={handleLogout} className="py-2 px-4 bg-gray-200 rounded hover:bg-gray-300 text-gray-900">Logout</button>
+                <Link className="py-1 px-3 text-gray-700 hover:text-gray-900" to="/post/new" onClick={handleMenuItemClick}>Create a new Blog</Link>
+                <span className="py-1 px-3 text-gray-700">{authState.user.email}</span>
+                <button onClick={handleLogout} className="py-1 px-3 bg-indigo-200 rounded hover:bg-indigo-300 text-gray-900">Logout</button>
               </>
             ) : (
               <>
-                <Link className="py-2 px-3 text-gray-700 hover:text-gray-900" to="/signup" onClick={handleMenuItemClick}>Sign Up</Link>
-                <Link className="py-2 px-3 text-gray-700 hover:text-gray-900" to="/login" onClick={handleMenuItemClick}>Login</Link>
+                <Link className="py-1 px-3 bg-indigo-200 rounded hover:bg-indigo-300 text-gray-900" to="/signup" onClick={handleMenuItemClick}>Sign Up</Link>
+                <Link className="py-1 px-3 bg-indigo-200 rounded hover:bg-indigo-300 text-gray-900" to="/login" onClick={handleMenuItemClick}>Login</Link>
               </>
             )}
           </div>
@@ -67,17 +67,17 @@ const Navbar = () => {
 
         {/* Dropdown Menu for Mobile View */}
         <div className="md:hidden hidden" id="nav-content-mobile">
-          <Link className="block py-2 px-4 text-sm hover:bg-gray-200" to="/" onClick={handleMenuItemClick}>Home</Link>
+          <Link className="block py-2 px-4 text-sm hover:bg-indigo-200" to="/" onClick={handleMenuItemClick}>Home</Link>
           {authState.signedIn ? (
             <>
-              <Link className="block py-2 px-4 text-sm hover:bg-gray-200" to="/post/new" onClick={handleMenuItemClick}>Create a new Blog</Link>
+              <Link className="block py-2 px-4 text-sm hover:bg-indigo-200" to="/post/new" onClick={handleMenuItemClick}>Create a new Blog</Link>
               <span className="block py-2 px-4 text-sm text-gray-700">{authState.user.email}</span>
-              <button onClick={handleLogout} className="block w-full text-left py-2 px-4 text-sm text-gray-700 hover:bg-gray-200">Logout</button>
+              <button onClick={handleLogout} className="block w-full text-left py-1 px-3 bg-indigo-200 rounded hover:bg-gray-300 text-gray-900">Logout</button>
             </>
           ) : (
             <>
-              <Link className="block py-2 px-4 text-sm hover:bg-gray-200" to="/signup" onClick={handleMenuItemClick}>Sign Up</Link>
-              <Link className="block py-2 px-4 text-sm hover:bg-gray-200" to="/login" onClick={handleMenuItemClick}>Login</Link>
+              <Link className="block py-2 px-4 text-sm hover:bg-indigo-200" to="/signup" onClick={handleMenuItemClick}>Sign Up</Link>
+              <Link className="block py-2 px-4 text-sm hover:bg-indigo-200" to="/login" onClick={handleMenuItemClick}>Login</Link>
             </>
           )}
         </div>

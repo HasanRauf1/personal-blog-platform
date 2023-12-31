@@ -80,7 +80,7 @@ const PostDetail = () => {
       <div className="container mx-auto px-4 py-8">
         <article>
           <header className="mb-4">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">{post.title}</h1>
+            <h1 className="text-3xl font-bold text-indigo-900 mb-2">{post.title}</h1>
             <p className="text-sm text-gray-600">Published {formattedDate}</p>
           </header>
           <div className="mb-6 prose prose-lg max-w-none text-gray-800">{post.body}</div>
@@ -100,7 +100,7 @@ const PostDetail = () => {
             </div>
           }
           <section>
-            {comments.length !== 0 && <h2 className="text-xl font-semibold text-gray-900 mb-4">Comments</h2>}
+            {comments.length !== 0 && <h2 className="text-xl font-semibold text-indigo-900 mb-4">Comments</h2>}
             {comments.map(comment => (
               <Comment key={comment.id} comment={comment} />
             ))}
