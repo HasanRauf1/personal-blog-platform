@@ -88,8 +88,8 @@ export const logout = async () => {
     if (newCsrfToken) {
       updateCsrfToken(newCsrfToken);
     }    
-
     return true;
+
   } catch (error) {
     console.error('Logout error:', error);
     return false;

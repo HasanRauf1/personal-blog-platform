@@ -1,70 +1,85 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import { logout } from '../services/authService';
 
 const Navbar = () => {
   const { authState, checkAuthStatus } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   // Toggle menu function for small screens
   const toggleMenu = () => {
-    const navContent = document.getElementById('nav-content');
+    const navContent = document.getElementById('nav-content-mobile');
     navContent.classList.toggle('hidden');
   };
 
   const handleLogout = async () => {
     const result = await logout();
-    toggleMenu()
+    handleMenuItemClick();
+    
     if (result) {
       await checkAuthStatus()
+      navigate('/');
     } else {
       console.error('Logout failed');
     }
   };
 
+  const handleMenuItemClick = async () => {
+    if (window.innerWidth < 768) { // Close menu in mobile view
+      toggleMenu();
+    }
+  };
+
   return (
-    <nav className="fixed w-full z-10 top-0 bg-white shadow">
-      <div className="w-full md:max-w-4xl mx-auto flex flex-wrap items-center justify-between mt-0 py-3">
-        <div className="pl-4">
-          <Link to="/" className="text-gray-900 text-base no-underline hover:no-underline font-extrabold text-xl">
+    <nav className="bg-white shadow-lg">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="flex justify-between items-center py-3">
+          {/* Logo and branding */}
+          <Link to="/" className="text-gray-700 hover:text-gray-900 font-bold text-xl">
             Blog Posts
           </Link>
-        </div>
-        <div className="block lg:hidden pr-4">
-          <button onClick={toggleMenu} className="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-green-500 appearance-none focus:outline-none">
-            <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
-          </button>
-        </div>
-        <div className="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-gray-100 md:bg-transparent z-20" id="nav-content">
-          <ul className="list-reset lg:flex justify-end flex-1 items-center">
-            <li onClick={toggleMenu} className="mr-3">
-              <Link className="inline-block py-2 px-4 text-gray-900 font-bold no-underline" to="/">Home</Link>
-            </li>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button onClick={toggleMenu} className="text-gray-700 hover:text-gray-900 focus:outline-none">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+          </div>
+
+          {/* Primary Nav Items for Large Screens */}
+          <div className="hidden md:flex items-center space-x-1" id="nav-content">
+            <Link className="py-2 px-3 text-gray-700 hover:text-gray-900" to="/" onClick={handleMenuItemClick}>Home</Link>
             {authState.signedIn ? (
               <>
-                <li onClick={toggleMenu} className="mr-3">
-                  <Link className="inline-block text-gray-600 no-underline hover:text-gray-900 hover:text-underline py-2 px-4" to="/post/new">Create a new Blog</Link>
-                </li>
-                <li className="mr-3">
-                  <span className="inline-block py-2 px-4 text-gray-900 font-bold">{authState.user.email}</span>
-                </li>
-                <li className="mr-3">
-                  <button onClick={handleLogout} className="inline-block py-2 px-4 text-gray-900 font-bold no-underline">
-                    Logout
-                  </button>
-                </li>
+                <Link className="py-2 px-3 text-gray-700 hover:text-gray-900" to="/post/new" onClick={handleMenuItemClick}>Create a new Blog</Link>
+                <span className="py-2 px-3 text-gray-700">{authState.user.email}</span>
+                <button onClick={handleLogout} className="py-2 px-4 bg-gray-200 rounded hover:bg-gray-300 text-gray-900">Logout</button>
               </>
             ) : (
               <>
-                <li onClick={toggleMenu} className="mr-3">
-                  <Link to="/signup" className="inline-block py-2 px-4 text-gray-900 font-bold no-underline">Sign Up</Link>
-                </li>
-                <li onClick={toggleMenu} className="mr-3">
-                  <Link to="/login" className="inline-block py-2 px-4 text-gray-900 font-bold no-underline">Login</Link>
-                </li>
+                <Link className="py-2 px-3 text-gray-700 hover:text-gray-900" to="/signup" onClick={handleMenuItemClick}>Sign Up</Link>
+                <Link className="py-2 px-3 text-gray-700 hover:text-gray-900" to="/login" onClick={handleMenuItemClick}>Login</Link>
               </>
             )}
-          </ul>
+          </div>
+        </div>
+
+        {/* Dropdown Menu for Mobile View */}
+        <div className="md:hidden hidden" id="nav-content-mobile">
+          <Link className="block py-2 px-4 text-sm hover:bg-gray-200" to="/" onClick={handleMenuItemClick}>Home</Link>
+          {authState.signedIn ? (
+            <>
+              <Link className="block py-2 px-4 text-sm hover:bg-gray-200" to="/post/new" onClick={handleMenuItemClick}>Create a new Blog</Link>
+              <span className="block py-2 px-4 text-sm text-gray-700">{authState.user.email}</span>
+              <button onClick={handleLogout} className="block w-full text-left py-2 px-4 text-sm text-gray-700 hover:bg-gray-200">Logout</button>
+            </>
+          ) : (
+            <>
+              <Link className="block py-2 px-4 text-sm hover:bg-gray-200" to="/signup" onClick={handleMenuItemClick}>Sign Up</Link>
+              <Link className="block py-2 px-4 text-sm hover:bg-gray-200" to="/login" onClick={handleMenuItemClick}>Login</Link>
+            </>
+          )}
         </div>
       </div>
     </nav>

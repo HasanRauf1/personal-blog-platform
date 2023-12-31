@@ -12,21 +12,19 @@ const PostsList = () => {
   }, []);
 
   return (
-    <ul role="list" className="divide-y divide-gray-100">
-      {posts.map((post) => (
-        <li key={post.id} className="flex justify-between gap-x-6 py-5">
-          <div className="flex min-w-0 gap-x-4">
-            <div className="min-w-0 flex-auto ">
-              <Link to={`/post/${post.id}`}>
-                <p className="text-md font-semibold leading-6 text-gray-900">{post.title}</p>
-              </Link>
-              <p className="mt-1 truncate text-xs leading-5 text-gray-500">{post.body}</p>
-            </div>
+    <div className="max-w-2xl mx-auto py-5 px-4 sm:px-6 lg:px-8">
+      <div className="space-y-6">
+        {posts.map((post) => (
+          <div key={post.id} className="group block p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+            <Link to={`/post/${post.id}`}>
+              <h3 className="text-lg font-semibold text-indigo-800 group-hover:text-indigo-600">{post.title}</h3>
+            </Link>
+            <p className="mt-2 text-sm text-gray-600 line-clamp-3">{post.body}</p>
           </div>
-        </li>
-      ))}
-    </ul>
-  )
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default PostsList;
