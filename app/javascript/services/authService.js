@@ -1,4 +1,4 @@
-export const signup = async (email, password, passwordConfirmation) => {
+export const signup = async (name, phoneNumber, email, password, passwordConfirmation) => {
   try {
     const response = await fetch('/users', {
       method: 'POST',
@@ -8,6 +8,8 @@ export const signup = async (email, password, passwordConfirmation) => {
       },
       body: JSON.stringify({
         user: {
+          name,
+          phone_number: phoneNumber,
           email,
           password,
           password_confirmation: passwordConfirmation,

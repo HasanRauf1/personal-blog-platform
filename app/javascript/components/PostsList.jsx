@@ -19,6 +19,7 @@ const PostsList = () => {
             <Link to={`/post/${post.id}`}>
               <h3 className="text-lg font-semibold text-indigo-900 group-hover:text-indigo-600">{post.title}</h3>
             </Link>
+            <p className="text-sm text-gray-600">{post.user.name}</p>
             <p className="mt-2 text-sm text-gray-600 line-clamp-3">{post.body}</p>
           </div>
         ))}

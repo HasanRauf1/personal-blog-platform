@@ -5,14 +5,13 @@ class Api::PostsController < ApplicationController
   
   # GET /posts
   def index
-    @posts = Post.all
-    render json: @posts
+    @posts = Post.all.includes(:user)
+    render json: @posts, include: :user
   end
 
   # GET /posts/:id
   def show
-    # @post = Post.find(params[:id])
-    render json: @post
+    render json: @post, include: :user
   end
 
   # POST /posts

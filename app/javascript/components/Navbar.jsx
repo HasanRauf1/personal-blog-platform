@@ -53,7 +53,7 @@ const Navbar = () => {
             {authState.signedIn ? (
               <>
                 <Link className="py-1 px-3 text-gray-700 hover:text-gray-900" to="/post/new" onClick={handleMenuItemClick}>Create a new Blog</Link>
-                <span className="py-1 px-3 text-gray-700">{authState.user.email}</span>
+                <span className="py-1 px-3 text-gray-700">{authState.user.name}</span>
                 <button onClick={handleLogout} className="py-1 px-3 bg-indigo-200 rounded hover:bg-indigo-300 text-gray-900">Logout</button>
               </>
             ) : (

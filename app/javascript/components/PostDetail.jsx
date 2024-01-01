@@ -50,7 +50,7 @@ const PostDetail = () => {
 
   const Comment = ({ comment }) => {
     // Extract the first character and capitalize it
-    const initial = comment.user?.email ? comment.user.email.charAt(0).toUpperCase() : 'U';
+    const initial = comment.user?.name ? comment.user.name.charAt(0).toUpperCase() : 'U';
   
     return (
       <div className="bg-white shadow rounded-lg p-4 mb-4">
@@ -81,6 +81,7 @@ const PostDetail = () => {
         <article>
           <header className="mb-4">
             <h1 className="text-3xl font-bold text-indigo-900 mb-2">{post.title}</h1>
+            <p className="text-sm text-gray-600">{post.user.name}</p>
             <p className="text-sm text-gray-600">Published {formattedDate}</p>
           </header>
           <div className="mb-6 prose prose-lg max-w-none text-gray-800">{post.body}</div>
