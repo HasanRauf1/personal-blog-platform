@@ -11,17 +11,7 @@ class Api::CommentsController < ApplicationController
     @comment.user = current_user
   
     if @comment.save
-      post_author_phone_number = @post.user.phone_number
-  
-      # Construct the SMS message
-      sms_body = "New comment on your post by #{current_user.name}: #{@comment.content}"
-  
-      # Send the SMS
-      TwilioClient.new.send_sms(
-        to: post_author_phone_number, 
-        body: sms_body
-      )
-      
+      SendSmsJob.perform_later(@post.id, @comment.id)
       render json: @comment, include: :user, status: :created, location: @api_post
     else
       render json: @comment.errors, status: :unprocessable_entity
