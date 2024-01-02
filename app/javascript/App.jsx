@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import ContentContainer from './components/ContentContainer';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import SubscriptionPage from './components/SubscriptionPage';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/post/:postId" element={<PostDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/subscriptions" element={<SubscriptionPage />} />
         </Routes>
       </ContentContainer>
       </AuthProvider>

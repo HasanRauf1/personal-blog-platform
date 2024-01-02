@@ -1,19 +1,16 @@
 class SendSmsJob < ApplicationJob
   queue_as :default
 
-  def perform(post_id, comment_id)
-    post = Post.find(post_id)
-    comment = Comment.find(comment_id)
-    user = comment.user
-    post_author = post.user
+  def perform(subscribers, record)
+    
+    subscribers.each do |subscriber|
+      message_body = if record.is_a?(Post)
+        "Hi, #{subscriber.name} New post: #{record.title}"
+      elsif record.is_a?(Comment)
+        "Hi, #{subscriber.name} New comment on #{record.post.title}: #{record.content}"
+      end
 
-    if post_author.phone_number.present?
-      sms_body = "New comment on your post '#{post.title}' by #{user.name}: #{comment.content}"
-
-      TwilioClient.new.send_sms(
-        to: post_author.phone_number, 
-        body: sms_body
-      )
+      TwilioClient.new.send_sms(to: subscriber.phone_number, body: message_body)
     end
   end
 end
