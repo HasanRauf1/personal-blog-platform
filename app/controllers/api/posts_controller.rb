@@ -18,6 +18,7 @@ class Api::PostsController < ApplicationController
   def create
     @post = current_user.posts.build(post_params)
     if @post.save
+      SmsNotificationService.new('post', @post.id).call
       render json: @post, status: :created
     else
       render json: @post.errors, status: :unprocessable_entity

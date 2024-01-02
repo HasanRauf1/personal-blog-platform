@@ -53,6 +53,7 @@ const Navbar = () => {
             {authState.signedIn ? (
               <>
                 <Link className="py-1 px-3 text-gray-700 hover:text-gray-900" to="/post/new" onClick={handleMenuItemClick}>Create a new Blog</Link>
+                <Link className="py-1 px-3 text-gray-700 hover:text-gray-900" to="/subscriptions" onClick={handleMenuItemClick}>Subscriptions</Link>
                 <span className="py-1 px-3 text-gray-700">{authState.user.name}</span>
                 <button onClick={handleLogout} className="py-1 px-3 bg-indigo-200 rounded hover:bg-indigo-300 text-gray-900">Logout</button>
               </>
@@ -66,12 +67,13 @@ const Navbar = () => {
         </div>
 
         {/* Dropdown Menu for Mobile View */}
-        <div className="md:hidden hidden" id="nav-content-mobile">
+        <div className="md:hidden hidden py-2" id="nav-content-mobile">
           <Link className="block py-2 px-4 text-sm hover:bg-indigo-200" to="/" onClick={handleMenuItemClick}>Home</Link>
           {authState.signedIn ? (
             <>
               <Link className="block py-2 px-4 text-sm hover:bg-indigo-200" to="/post/new" onClick={handleMenuItemClick}>Create a new Blog</Link>
-              <span className="block py-2 px-4 text-sm text-gray-700">{authState.user.email}</span>
+              <Link className="block py-2 px-4 text-sm hover:bg-indigo-200" to="/subscriptions" onClick={handleMenuItemClick}>Subscriptions</Link>
+              <span className="block py-2 px-4 text-sm text-gray-700">{authState.user.name}</span>
               <button onClick={handleLogout} className="block w-full text-left py-1 px-3 bg-indigo-200 rounded hover:bg-gray-300 text-gray-900">Logout</button>
             </>
           ) : (
