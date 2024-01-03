@@ -12,7 +12,6 @@ class Api::CommentsController < ApplicationController
   
     if @comment.save
       SmsNotificationService.new('comment', @comment.id).call
-      SendSmsJob.perform_later(@post.id, @comment.id)
       render json: @comment, include: :user, status: :created, location: @api_post
     else
       render json: @comment.errors, status: :unprocessable_entity
